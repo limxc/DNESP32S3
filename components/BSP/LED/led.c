@@ -19,8 +19,6 @@
  */
 
 #include "led.h"
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
 
 /**
  * @brief       初始化LED
@@ -39,15 +37,4 @@ void led_init(void)
     gpio_config(&gpio_init_struct);                        /* 配置GPIO */
 
     LED(1); /* 关闭LED */
-}
-
-void led_blink(void)
-{
-    led_init();
-
-    while (1)
-    {
-        LED_TOGGLE();
-        vTaskDelay(1000); 
-    }
 }

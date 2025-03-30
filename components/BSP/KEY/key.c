@@ -14,12 +14,13 @@
  * 技术论坛:www.openedv.com
  * 公司网址:www.alientek.com
  * 购买地址:openedv.taobao.com
- * 
+ *
  ****************************************************************************************************
  */
 
 #include "key.h"
-
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
 
 /**
  * @brief       初始化按键
@@ -30,12 +31,12 @@ void key_init(void)
 {
     gpio_config_t gpio_init_struct;
 
-    gpio_init_struct.intr_type = GPIO_INTR_DISABLE;         /* 失能引脚中断 */
-    gpio_init_struct.mode = GPIO_MODE_INPUT;                /* 输入模式 */
-    gpio_init_struct.pull_up_en = GPIO_PULLUP_ENABLE;       /* 使能上拉 */
-    gpio_init_struct.pull_down_en = GPIO_PULLDOWN_DISABLE;  /* 失能下拉 */
-    gpio_init_struct.pin_bit_mask = 1ull << BOOT_GPIO_PIN;  /* BOOT按键引脚 */
-    gpio_config(&gpio_init_struct);                         /* 配置使能 */
+    gpio_init_struct.intr_type = GPIO_INTR_DISABLE;        /* 失能引脚中断 */
+    gpio_init_struct.mode = GPIO_MODE_INPUT;               /* 输入模式 */
+    gpio_init_struct.pull_up_en = GPIO_PULLUP_ENABLE;      /* 使能上拉 */
+    gpio_init_struct.pull_down_en = GPIO_PULLDOWN_DISABLE; /* 失能下拉 */
+    gpio_init_struct.pin_bit_mask = 1ull << BOOT_GPIO_PIN; /* BOOT按键引脚 */
+    gpio_config(&gpio_init_struct);                        /* 配置使能 */
 }
 
 /**
@@ -50,16 +51,16 @@ void key_init(void)
 uint8_t key_scan(uint8_t mode)
 {
     uint8_t keyval = 0;
-    static uint8_t key_boot = 1;    /* 按键松开标志 */
+    static uint8_t key_boot = 1; /* 按键松开标志 */
 
-    if(mode)
+    if (mode)
     {
         key_boot = 1;
     }
 
-    if (key_boot && (BOOT == 0))    /* 按键松开标志为1，且有任意一个按键按下了 */
+    if (key_boot && (BOOT == 0)) /* 按键松开标志为1，且有任意一个按键按下了 */
     {
-        vTaskDelay(10);             /* 去抖动 */
+        vTaskDelay(10); /* 去抖动 */
         key_boot = 0;
 
         if (BOOT == 0)
@@ -72,5 +73,5 @@ uint8_t key_scan(uint8_t mode)
         key_boot = 1;
     }
 
-    return keyval;                  /* 返回键值 */
+    return keyval; /* 返回键值 */
 }

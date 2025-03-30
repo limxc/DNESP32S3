@@ -50,6 +50,4 @@ enum GPIO_OUTPUT_STATE
 /* 函数声明*/
 void led_init(void); /* 初始化LED */
 
-void led_blink(void);
-
 #endif

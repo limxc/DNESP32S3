@@ -1,9 +1,10 @@
-#include "hw.h"
-#include "led.h"
-#include "key.h"
-#include "button.h"
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
 
-void key_led(void);
+#include "demo.h"
+#include "hw.h"
+
+#include "button.h"
 
 /**
  * @brief       程序入口
@@ -16,41 +17,16 @@ void app_main(void)
 
     hwinfo(); /* 硬件信息 */
 
-    // led_blink(); /* LED闪烁 */
+    //led_blink(); /* LED闪烁 */
 
-    // key_led(); /* 按键切换灯 */
+    //bootbutton_click(); /* 按键触发 */
 
-    bootbutton_click(); /* 按键触发 */
+    //key_led(); /* 按键切换灯 */
+
+    exit_key_led(); /* 外部中断触发按键切换灯 */
 
     while (1)
     {
         vTaskDelay(1000);
-    }
-}
-
-void key_led(void)
-{
-    uint8_t key;
-    led_init();
-    key_init();
-
-    while (1)
-    {
-        key = key_scan(0); /* 获取键值 */
-
-        switch (key)
-        {
-        case BOOT_PRES: /* BOOT被按下 */
-        {
-            LED_TOGGLE(); /* LED状态翻转 */
-            break;
-        }
-        default:
-        {
-            break;
-        }
-        }
-
-        vTaskDelay(10);
     }
 }

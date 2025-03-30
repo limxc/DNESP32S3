@@ -7,7 +7,13 @@
     "idf.toolsPathWin": "d:\\\\ESP32\\\\esp-idf\\\\tools",
     "files.associations": {
         "ets_sys.h": "c",
-        "esp_sleep.h": "c"
+        "esp_sleep.h": "c",
+        "button.h": "c",
+        "inttypes.h": "c",
+        "esp_system.h": "c",
+        "exit.h": "c",
+        "key.h": "c",
+        "freertos.h": "c"
     },
     "idf.customExtraPaths": [
         "D:\\ESP32\\Espressif\\tools\\xtensa-esp-elf-gdb\\12.1_20221002\\xtensa-esp-elf-gdb\\bin",

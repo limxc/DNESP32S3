@@ -2,12 +2,14 @@ set(src_dirs
             LED
             HW
             KEY
+            EXIT 
             )
 
 set(include_dirs
             LED
             HW
             KEY
+            EXIT
             )
 
 set(requires
